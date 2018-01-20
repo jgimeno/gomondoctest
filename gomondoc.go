@@ -1,12 +1,12 @@
-package mongodoctest
+package gomondoctest
 
 import (
-	"testing"
-	"os/exec"
 	"bytes"
-	"log"
 	"fmt"
+	"log"
+	"os/exec"
 	"strings"
+	"testing"
 )
 
 //Inspired by https://developers.almamedia.fi/2014/painless-mongodb-testing-with-docker-and-golang/
@@ -14,7 +14,7 @@ import (
 const mongoImage = "mongo"
 
 type Mongodoc struct {
-	t *testing.T
+	t           *testing.T
 	containerID string
 }
 
@@ -41,7 +41,7 @@ func checkDocker(t *testing.T) {
 func (e *Mongodoc) RunMongo() {
 	log.Printf("Executing docker mongo image.")
 
-	out, err := exec.Command("docker", "run", "--name", "some-mongo",  "-p", "27017:27017", "-d", "mongo").Output()
+	out, err := exec.Command("docker", "run", "--name", "some-mongo", "-p", "27017:27017", "-d", "mongo").Output()
 
 	if err != nil {
 		e.t.Fatal("Error running mongo image.", err)
@@ -73,7 +73,7 @@ func installDockerImage(t *testing.T) {
 	log.Printf("Pulling docker image %s ...", mongoImage)
 	if err := dockerPull(mongoImage); err != nil {
 		t.Skipf("Error pulling %s: %v", mongoImage, err)
-	}	
+	}
 }
 
 func dockerPull(name string) interface{} {
