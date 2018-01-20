@@ -13,12 +13,12 @@ import (
 
 const mongoImage = "mongo"
 
-type Mongodoc struct {
+type Gomondoc struct {
 	t           *testing.T
 	containerID string
 }
 
-func NewMongodoc(t *testing.T) *Mongodoc {
+func NewGomondoc(t *testing.T) *Gomondoc {
 	checkDocker(t)
 
 	if ok, err := dockerHasImage(mongoImage); !ok || err != nil {
@@ -29,7 +29,7 @@ func NewMongodoc(t *testing.T) *Mongodoc {
 		installDockerImage(t)
 	}
 
-	return &Mongodoc{t, ""}
+	return &Gomondoc{t, ""}
 }
 
 func checkDocker(t *testing.T) {
@@ -38,7 +38,7 @@ func checkDocker(t *testing.T) {
 	}
 }
 
-func (e *Mongodoc) RunMongo() {
+func (e *Gomondoc) RunMongo() {
 	log.Printf("Executing docker mongo image.")
 
 	out, err := exec.Command("docker", "run", "--name", "some-mongo", "-p", "27017:27017", "-d", "mongo").Output()
@@ -54,7 +54,7 @@ func (e *Mongodoc) RunMongo() {
 	}
 }
 
-func (md *Mongodoc) StopMongo() {
+func (md *Gomondoc) StopMongo() {
 	log.Printf("Stopping docker image.")
 	out, err := exec.Command("docker", "stop", md.containerID).Output()
 
